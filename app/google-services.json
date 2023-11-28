@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "784810443051",
+    "project_id": "fir-example-84320",
+    "storage_bucket": "fir-example-84320.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784810443051:android:df6a8e381c8fd63e3d856e",
+        "android_client_info": {
+          "package_name": "com.example.firebaseexample"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNNwOQtbcv1Tg-RlISCbUSw3VTxtKrB7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
