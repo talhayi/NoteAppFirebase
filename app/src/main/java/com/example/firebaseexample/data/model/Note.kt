@@ -1,0 +1,12 @@
+package com.example.firebaseexample.data.model
+
+import com.google.firebase.firestore.ServerTimestamp
+import java.util.Date
+
+//@Parcelize
+data class Note(
+    var id: String? = null,
+    val text: String? = null,
+    @ServerTimestamp
+    val date: Date = Date(),
+)//: Parcelable

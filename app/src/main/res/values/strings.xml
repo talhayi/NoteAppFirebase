@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FireBaseExample</string>
+    <string name="note_detail_fragment">Note Detail Fragment</string>
+    <string name="note_list_fragment">Note List Fragment</string>
 </resources>
