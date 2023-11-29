@@ -5,13 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.example.firebaseexample.R
+import com.example.firebaseexample.data.model.Note
 import com.example.firebaseexample.databinding.FragmentNoteDetailBinding
+import com.example.firebaseexample.util.UIState
+import com.example.firebaseexample.util.hide
+import com.example.firebaseexample.util.show
+import com.example.firebaseexample.util.toast
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Date
 
 @AndroidEntryPoint
 class NoteDetailFragment : Fragment() {
     val TAG: String = "NoteDetailFragment"
     private lateinit var binding: FragmentNoteDetailBinding
+    private val viewModel: NoteViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,5 +32,44 @@ class NoteDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.button.setOnClickListener {
+            if (validation()){
+                viewModel.addNote(
+                    Note(
+                        id = getString(R.string.empty),
+                        text = binding.noteMsg.text.toString(),
+                        date = Date(),
+                    )
+                )
+            }
+        }
+        viewModel.addNote.observe(viewLifecycleOwner){ state->
+            when(state){
+                is UIState.Loading->{
+                    binding.progressBar.show()
+                    binding.button.text  = getString(R.string.empty)
+                }
+                is UIState.Failure->{
+                    binding.progressBar.hide()
+                    binding.button.text = getString(R.string.create)
+                    toast(state.error)
+                }
+                is UIState.Success->{
+                    binding.button.text = getString(R.string.create)
+                    binding.progressBar.hide()
+                    toast("Note  has been created successfully")
+                }
+            }
+        }
+
+    }
+
+    private fun validation(): Boolean{
+        var isValid = true
+        if (binding.noteMsg.text.toString().isNullOrEmpty()){
+            isValid = false
+            toast("Enter message")
+        }
+        return isValid
     }
 }

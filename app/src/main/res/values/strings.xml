@@ -2,4 +2,9 @@
     <string name="app_name">FireBaseExample</string>
     <string name="note_detail_fragment">Note Detail Fragment</string>
     <string name="note_list_fragment">Note List Fragment</string>
+    <string name="create">Create</string>
+    <string name="message">Message</string>
+    <string name="note_id">Note ID</string>
+    <string name="create2">Create</string>
+    <string name="empty">""</string>
 </resources>

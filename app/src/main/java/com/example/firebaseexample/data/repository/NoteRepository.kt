@@ -4,5 +4,6 @@ import com.example.firebaseexample.data.model.Note
 import com.example.firebaseexample.util.UIState
 
 interface NoteRepository {
-    fun getNotes(): UIState<List<Note>>
+    fun getNotes(result: (UIState<List<Note>>)-> Unit)
+    fun addNote(note: Note, result: (UIState<String>)-> Unit)
 }
