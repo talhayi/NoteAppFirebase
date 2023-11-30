@@ -5,6 +5,8 @@
     <string name="create">Create</string>
     <string name="message">Message</string>
     <string name="note_id">Note ID</string>
-    <string name="create2">Create</string>
     <string name="empty">""</string>
+    <string name="note_has_been_created_successfully">Note  has been created successfully</string>
+    <string name="enter_message">Enter message</string>
+    <string name="update">Update</string>
 </resources>

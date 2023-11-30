@@ -22,7 +22,7 @@ class NoteListFragment : Fragment() {
     val TAG: String = "NoteListFragment"
     private lateinit var binding: FragmentNoteListBinding
     private val viewModel: NoteViewModel by viewModels()
-    val adapter by lazy {
+    private val adapter by lazy {
         NoteListAdapter(
             onItemClicked = { pos, item ->
                 findNavController().navigate(R.id.action_noteListFragment_to_noteDetailFragment,Bundle().apply {

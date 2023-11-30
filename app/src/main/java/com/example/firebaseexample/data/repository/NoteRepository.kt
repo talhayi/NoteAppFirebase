@@ -6,4 +6,5 @@ import com.example.firebaseexample.util.UIState
 interface NoteRepository {
     fun getNotes(result: (UIState<List<Note>>)-> Unit)
     fun addNote(note: Note, result: (UIState<String>)-> Unit)
+    fun updateNote(note: Note, result: (UIState<String>)-> Unit)
 }
