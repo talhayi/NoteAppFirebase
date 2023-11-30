@@ -69,6 +69,7 @@ class NoteDetailFragment : Fragment() {
                     binding.button.text = getString(R.string.create)
                     binding.progressBar.hide()
                     toast(getString(R.string.note_has_been_created_successfully))
+                    findNavController().navigate(NoteDetailFragmentDirections.actionNoteDetailFragmentToNoteListFragment())
                 }
             }
         }

@@ -69,5 +69,6 @@ dependencies {
     //Dagger-Hilt
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
-
+    //ViewPager2
+    implementation ("androidx.viewpager2:viewpager2:1.1.0-beta02")
 }
