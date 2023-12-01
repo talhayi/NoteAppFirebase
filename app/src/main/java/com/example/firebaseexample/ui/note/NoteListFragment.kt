@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.firebaseexample.R
 import com.example.firebaseexample.databinding.FragmentNoteListBinding
+import com.example.firebaseexample.ui.auth.AuthViewModel
 import com.example.firebaseexample.util.UIState
 import com.example.firebaseexample.util.hide
 import com.example.firebaseexample.util.show
@@ -21,7 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class NoteListFragment : Fragment() {
     val TAG: String = "NoteListFragment"
     private lateinit var binding: FragmentNoteListBinding
-    private val viewModel: NoteViewModel by viewModels()
+    private val noteViewModel: NoteViewModel by viewModels()
+    private val authViewModel: AuthViewModel by viewModels()
     private val adapter by lazy {
         NoteListAdapter(
             onItemClicked = { position, item ->
@@ -49,6 +51,7 @@ class NoteListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observer()
         val staggeredGridLayoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = staggeredGridLayoutManager
         binding.recyclerView.adapter = adapter
@@ -56,8 +59,16 @@ class NoteListFragment : Fragment() {
         binding.button.setOnClickListener {
             findNavController().navigate(R.id.action_noteListFragment_to_noteDetailFragment)
         }
-        viewModel.getNotes()
-        viewModel.notes.observe(viewLifecycleOwner) { state ->
+        binding.logout.setOnClickListener {
+            authViewModel.logout {
+                findNavController().navigate(R.id.action_noteListFragment_to_loginFragment)
+            }
+        }
+        noteViewModel.getNotes()
+    }
+
+    private fun observer(){
+        noteViewModel.notes.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UIState.Loading -> {
                     binding.progressBar.show()
