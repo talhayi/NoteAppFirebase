@@ -25,4 +25,19 @@
     <string name="last_modified">Last Modified</string>
     <string name="tags">Tags</string>
     <string name="description">Description</string>
+    <string name="registration">Registration</string>
+    <string name="note_taking_app_where_you_save_words">Note taking app where you save words</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="job_title">Job Title</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="enter_first_name">Enter first name</string>
+    <string name="enter_last_name">Enter last name</string>
+    <string name="enter_job_title">Enter job title</string>
+    <string name="enter_email">Enter email address</string>
+    <string name="invalid_email">Invalid email entered</string>
+    <string name="enter_password">Enter password</string>
+    <string name="invalid_password">Your password must be at least 8 characters</string>
 </resources>

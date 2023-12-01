@@ -1,4 +1,4 @@
-package com.example.firebaseexample.note
+package com.example.firebaseexample.ui.note
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

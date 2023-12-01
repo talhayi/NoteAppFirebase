@@ -8,3 +8,7 @@ object FireStoreTables{
 object FireStoreDocumentField {
     val DATE = "date"
 }
+
+object FireStoreCollection {
+    val USER = "user"
+}

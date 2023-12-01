@@ -1,7 +1,10 @@
 package com.example.firebaseexample.di
 
+import com.example.firebaseexample.data.repository.AuthRepository
+import com.example.firebaseexample.data.repository.AuthRepositoryImpl
 import com.example.firebaseexample.data.repository.NoteRepository
 import com.example.firebaseexample.data.repository.NoteRepositoryImpl
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
@@ -20,9 +23,24 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideFirebaseAuthInstance(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    @Singleton
     fun provideNoteRepository(
         database: FirebaseFirestore
     ): NoteRepository {
         return NoteRepositoryImpl(database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(
+        auth: FirebaseAuth,
+        database: FirebaseFirestore
+    ): AuthRepository {
+        return AuthRepositoryImpl(auth, database)
     }
 }

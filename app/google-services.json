@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:958916461222:android:de8a368ee542379c25ea67",
+        "mobilesdk_app_id": "1:784810443051:android:df6a8e381c8fd63e3d856e",
         "android_client_info": {
           "package_name": "com.example.firebaseexample"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBNzdmZANVjgKy7Nb4rek4k4Dr_nx-OGD0"
+          "current_key": "AIzaSyDNNwOQtbcv1Tg-RlISCbUSw3VTxtKrB7o"
         }
       ],
       "services": {
