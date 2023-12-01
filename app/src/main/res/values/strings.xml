@@ -40,4 +40,7 @@
     <string name="invalid_email">Invalid email entered</string>
     <string name="enter_password">Enter password</string>
     <string name="invalid_password">Your password must be at least 8 characters</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="haven_t_registered_yet">Haven’t registered yet?</string>
 </resources>

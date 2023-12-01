@@ -17,6 +17,10 @@ class AuthViewModel @Inject constructor(
     val register: LiveData<UIState<String>>
         get() = _register
 
+    private val _login = MutableLiveData<UIState<String>>()
+    val login: LiveData<UIState<String>>
+        get() = _login
+
     fun register(
         email: String,
         password: String,
@@ -28,5 +32,18 @@ class AuthViewModel @Inject constructor(
             password = password,
             user = user
         ) { _register.value = it }
+    }
+
+    fun login(
+        email: String,
+        password: String
+    ) {
+        _login.value = UIState.Loading
+        authRepository.loginUser(
+            email,
+            password
+        ){
+            _login.value = it
+        }
     }
 }

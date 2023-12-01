@@ -76,8 +76,20 @@ class AuthRepositoryImpl(
             }
     }
 
-    override fun loginUser(user: User, result: (UIState<String>) -> Unit) {
-        TODO("Not yet implemented")
+    override fun loginUser(
+        email: String,
+        password: String,
+        result: (UIState<String>) -> Unit) {
+        auth.signInWithEmailAndPassword(email,password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    result.invoke(UIState.Success("Login successfully!"))
+                }else{
+                    result.invoke(UIState.Failure("Authentication failed, Check email and password"))
+                }
+            }.addOnFailureListener {
+                result.invoke(UIState.Failure("Authentication failed, Check email and password"))
+            }
     }
 
     override fun forgotPassword(user: User, result: (UIState<String>) -> Unit) {
