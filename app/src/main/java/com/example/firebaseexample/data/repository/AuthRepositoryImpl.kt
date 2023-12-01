@@ -92,7 +92,17 @@ class AuthRepositoryImpl(
             }
     }
 
-    override fun forgotPassword(user: User, result: (UIState<String>) -> Unit) {
-        TODO("Not yet implemented")
+    override fun forgotPassword(email: String, result: (UIState<String>) -> Unit) {
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    result.invoke(UIState.Success("Email has been sent"))
+
+                } else {
+                    result.invoke(UIState.Failure(task.exception?.message))
+                }
+            }.addOnFailureListener {
+                result.invoke(UIState.Failure("Authentication failed, Check email"))
+            }
     }
 }
