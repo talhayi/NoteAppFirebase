@@ -9,4 +9,20 @@
     <string name="note_has_been_created_successfully">Note  has been created successfully</string>
     <string name="enter_message">Enter message</string>
     <string name="update">Update</string>
+    <string name="add_new_note">Add new note</string>
+    <string name="note_item_desc_placeholder">note item desc placeholder</string>
+    <string name="note_detail_desc_placeholder">note detail desc placeholder</string>
+    <string name="error_description">Description missing</string>
+    <string name="error_title">Title missing</string>
+    <string name="error_tag_text">Enter text</string>
+    <string name="APRİL_20">20 APRIL</string>
+    <string name="exploring_ideas">Exploring Ideas</string>
+    <string name="add_new_tag">Add new tag</string>
+    <string name="enter_text">Enter text</string>
+    <string name="design">Design</string>
+    <string name="all_notes">All Notes</string>
+    <string name="title">Title</string>
+    <string name="last_modified">Last Modified</string>
+    <string name="tags">Tags</string>
+    <string name="description">Description</string>
 </resources>

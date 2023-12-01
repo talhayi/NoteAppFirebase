@@ -18,8 +18,8 @@ class NoteViewModel @Inject constructor(
     val notes: LiveData<UIState<List<Note>>>
         get() = _notes
 
-    private val _addNote = MutableLiveData<UIState<String>>()
-    val addNote: LiveData<UIState<String>>
+    private val _addNote = MutableLiveData<UIState<Pair<Note,String>>>()
+    val addNote: LiveData<UIState<Pair<Note,String>>>
         get() = _addNote
 
     private val _updateNote = MutableLiveData<UIState<String>>()
