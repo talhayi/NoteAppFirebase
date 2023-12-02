@@ -72,4 +72,6 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
     //ViewPager2
     implementation ("androidx.viewpager2:viewpager2:1.1.0-beta02")
+    //Gson
+    implementation ("com.google.code.gson:gson:2.9.0")
 }

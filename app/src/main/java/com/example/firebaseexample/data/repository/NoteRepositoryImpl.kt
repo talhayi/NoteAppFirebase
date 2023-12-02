@@ -1,6 +1,7 @@
 package com.example.firebaseexample.data.repository
 
 import com.example.firebaseexample.data.model.Note
+import com.example.firebaseexample.data.model.User
 import com.example.firebaseexample.util.FireStoreDocumentField
 import com.example.firebaseexample.util.FireStoreTables
 import com.example.firebaseexample.util.UIState
@@ -11,8 +12,9 @@ import com.google.firebase.firestore.Query
 class NoteRepositoryImpl(
     private val database: FirebaseFirestore
 ) : NoteRepository {
-    override fun getNotes(result: (UIState<List<Note>>) -> Unit) {
+    override fun getNotes(user: User?, result: (UIState<List<Note>>) -> Unit) {
         database.collection(FireStoreTables.NOTE)
+            .whereEqualTo(FireStoreDocumentField.USER_ID, user?.id)
             .orderBy(FireStoreDocumentField.DATE, Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener {

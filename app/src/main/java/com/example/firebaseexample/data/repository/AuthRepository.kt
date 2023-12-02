@@ -9,4 +9,6 @@ interface AuthRepository {
     fun loginUser(email: String, password: String, result: (UIState<String>) -> Unit)
     fun forgotPassword(email: String, result: (UIState<String>) -> Unit)
     fun logout(result: () -> Unit)
+    fun storeSession(id: String, result: (User?) -> Unit)
+    fun getSession(result: (User?) -> Unit)
 }

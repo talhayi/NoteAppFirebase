@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.firebaseexample.data.model.Note
+import com.example.firebaseexample.data.model.User
 import com.example.firebaseexample.data.repository.NoteRepository
 import com.example.firebaseexample.util.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,10 +30,10 @@ class NoteViewModel @Inject constructor(
     private val _deleteNote = MutableLiveData<UIState<String>>()
     val deleteNote: LiveData<UIState<String>>
         get() = _deleteNote
-    fun getNotes() {
+    fun getNotes(user: User?) {
         _notes.value = UIState.Loading
 
-        noteRepository.getNotes {
+        noteRepository.getNotes(user) {
             _notes.value = it
         }
     }

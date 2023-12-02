@@ -18,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
 import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
+import com.example.firebaseexample.ui.auth.AuthViewModel
 import com.example.firebaseexample.util.*
 import com.google.android.material.button.MaterialButton
 import java.text.SimpleDateFormat
@@ -28,6 +29,7 @@ class NoteDetailFragment : Fragment() {
     val TAG: String = "NoteDetailFragment"
     private lateinit var binding: FragmentNoteDetailBinding
     private val viewModel: NoteViewModel by viewModels()
+    private val authViewModel: AuthViewModel by viewModels()
     private var objectNote: Note? = null
     private var tagsList: MutableList<String> = arrayListOf()
 
@@ -245,6 +247,6 @@ class NoteDetailFragment : Fragment() {
             description = binding.description.text.toString(),
             tags = tagsList,
             date = Date()
-        )
+        ).apply { authViewModel.getSession { this.userId = it?.id ?: ""}}
     }
 }

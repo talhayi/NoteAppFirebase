@@ -1,17 +1,22 @@
 package com.example.firebaseexample.data.repository
 
+import android.content.SharedPreferences
 import com.example.firebaseexample.data.model.User
 import com.example.firebaseexample.util.FireStoreCollection
+import com.example.firebaseexample.util.SharedPrefConstants
 import com.example.firebaseexample.util.UIState
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.Gson
 
 class AuthRepositoryImpl(
     private val auth: FirebaseAuth,
-    private val database: FirebaseFirestore
+    private val database: FirebaseFirestore,
+    private val appPreferences: SharedPreferences,
+    private val gson: Gson
 ): AuthRepository {
     override fun registerUser(
         email: String,
@@ -21,12 +26,19 @@ class AuthRepositoryImpl(
         auth.createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener {
                 if (it.isSuccessful){
+                    user.id = it.result.user?.uid ?: ""
                     updateUserInfo(user) { state ->
                         when(state){
                             is UIState.Success -> {
-                                result.invoke(
-                                    UIState.Success("User register successfully!")
-                                )
+                                storeSession(id = it.result.user?.uid ?: "") {
+                                    if (it == null){
+                                        result.invoke(UIState.Failure("User register successfully but session failed to store"))
+                                    }else{
+                                        result.invoke(
+                                            UIState.Success("User register successfully!")
+                                        )
+                                    }
+                                }
                             }
                             is UIState.Failure -> {
                                 result.invoke(UIState.Failure(state.error))
@@ -58,8 +70,7 @@ class AuthRepositoryImpl(
     }
 
     override fun updateUserInfo(user: User, result: (UIState<String>) -> Unit) {
-        val document = database.collection(FireStoreCollection.USER).document()
-        user.id = document.id
+        val document = database.collection(FireStoreCollection.USER).document(user.id!!)
         document
             .set(user)
             .addOnSuccessListener {
@@ -83,9 +94,13 @@ class AuthRepositoryImpl(
         auth.signInWithEmailAndPassword(email,password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    result.invoke(UIState.Success("Login successfully!"))
-                }else{
-                    result.invoke(UIState.Failure("Authentication failed, Check email and password"))
+                    storeSession(id = task.result.user?.uid ?: ""){user->
+                        if (user == null){
+                            result.invoke(UIState.Failure("Failed to store local session"))
+                        }else{
+                            result.invoke(UIState.Success("Login successfully!"))
+                        }
+                    }
                 }
             }.addOnFailureListener {
                 result.invoke(UIState.Failure("Authentication failed, Check email and password"))
@@ -108,6 +123,34 @@ class AuthRepositoryImpl(
 
     override fun logout(result: () -> Unit) {
         auth.signOut()
+        appPreferences.edit().putString(SharedPrefConstants.USER_SESSION, null).apply()
         result.invoke()
+    }
+
+    override fun storeSession(id: String, result: (User?) -> Unit) {
+        database.collection(FireStoreCollection.USER).document(id)
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful){
+                    val user = it.result.toObject(User::class.java)
+                    appPreferences.edit().putString(SharedPrefConstants.USER_SESSION,gson.toJson(user)).apply()
+                    result.invoke(user)
+                }else{
+                    result.invoke(null)
+                }
+            }
+            .addOnFailureListener {
+                result.invoke(null)
+            }
+    }
+
+    override fun getSession(result: (User?) -> Unit) {
+        val userStr = appPreferences.getString(SharedPrefConstants.USER_SESSION,null)
+        if (userStr == null){
+            result.invoke(null)
+        }else{
+            val user = gson.fromJson(userStr,User::class.java)
+            result.invoke(user)
+        }
     }
 }
