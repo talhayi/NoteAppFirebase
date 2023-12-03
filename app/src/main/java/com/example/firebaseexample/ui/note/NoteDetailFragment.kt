@@ -5,7 +5,6 @@ import android.app.Activity
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,7 +34,7 @@ import java.text.SimpleDateFormat
 
 @AndroidEntryPoint
 class NoteDetailFragment : Fragment() {
-    val TAG: String = "NoteDetailFragment"
+
     private lateinit var binding: FragmentNoteDetailBinding
     private val viewModel: NoteViewModel by viewModels()
     private val authViewModel: AuthViewModel by viewModels()
@@ -61,7 +60,6 @@ class NoteDetailFragment : Fragment() {
             toast(ImagePicker.getError(data))
         } else {
             binding.progressBar.hide()
-            Log.e(TAG,"Task Cancelled")
         }
     }
 
