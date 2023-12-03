@@ -164,7 +164,7 @@ class NoteDetailFragment : Fragment() {
         binding.images.adapter = adapter
         binding.images.itemAnimator = null
         imageUris = objectNote?.images?.map { it.toUri() }?.toMutableList() ?: arrayListOf()
-        adapter.updateList(imageUris    )
+        adapter.updateList(imageUris)
         binding.addImageLl.setOnClickListener {
             binding.progressBar.show()
             ImagePicker.with(this)
@@ -212,6 +212,9 @@ class NoteDetailFragment : Fragment() {
     }
     private fun onRemoveImage(pos: Int, item: Uri) {
         adapter.removeItem(pos)
+        if (objectNote != null){
+            binding.edit.performClick()
+        }
     }
     private fun showAddTagDialog(){
         val dialog = requireContext().createDialog(R.layout.add_tag_dialog, true)
@@ -304,7 +307,7 @@ class NoteDetailFragment : Fragment() {
 
     private fun onDonePressed() {
         if (imageUris.isNotEmpty()){
-            viewModel.onUploadSingleFile(imageUris.first()){ state ->
+            viewModel.onUploadMultipleFile(imageUris){ state ->
                 when (state) {
                     is UIState.Loading -> {
                         binding.progressBar.show()

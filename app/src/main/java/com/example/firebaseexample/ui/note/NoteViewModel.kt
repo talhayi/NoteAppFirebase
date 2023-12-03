@@ -68,4 +68,11 @@ class NoteViewModel @Inject constructor(
             noteRepository.uploadSingleFile(fileUris,onResult)
         }
     }
+
+    fun onUploadMultipleFile(fileUris: List<Uri>, onResult: (UIState<List<Uri>>) -> Unit){
+        onResult.invoke(UIState.Loading)
+        viewModelScope.launch {
+            noteRepository.uploadMultipleFile(fileUris,onResult)
+        }
+    }
 }
