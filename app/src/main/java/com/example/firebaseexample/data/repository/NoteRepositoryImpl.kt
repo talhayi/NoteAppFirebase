@@ -1,16 +1,23 @@
 package com.example.firebaseexample.data.repository
 
+import android.net.Uri
 import com.example.firebaseexample.data.model.Note
 import com.example.firebaseexample.data.model.User
 import com.example.firebaseexample.util.FireStoreDocumentField
 import com.example.firebaseexample.util.FireStoreTables
 import com.example.firebaseexample.util.UIState
+import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class NoteRepositoryImpl(
-    private val database: FirebaseFirestore
+    private val database: FirebaseFirestore,
+    private val storageReference: StorageReference
 ) : NoteRepository {
     override fun getNotes(user: User?, result: (UIState<List<Note>>) -> Unit) {
         database.collection(FireStoreTables.NOTE)
@@ -90,5 +97,23 @@ class NoteRepositoryImpl(
                     )
                 )
             }
+    }
+
+    override suspend fun uploadSingleFile(fileUri: Uri, onResult: (UIState<Uri>) -> Unit) {
+        try {
+            val uri: Uri = withContext(Dispatchers.IO) {
+                storageReference
+                    .putFile(fileUri)
+                    .await()
+                    .storage
+                    .downloadUrl
+                    .await()
+            }
+            onResult.invoke(UIState.Success(uri))
+        } catch (e: FirebaseException){
+            onResult.invoke(UIState.Failure(e.message))
+        }catch (e: Exception){
+            onResult.invoke(UIState.Failure(e.message))
+        }
     }
 }

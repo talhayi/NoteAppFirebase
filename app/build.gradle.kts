@@ -60,6 +60,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-storage")
     //Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$navigation_version")
     implementation("androidx.navigation:navigation-ui-ktx:$navigation_version")
@@ -71,7 +72,11 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
     //ViewPager2
-    implementation ("androidx.viewpager2:viewpager2:1.1.0-beta02")
+    implementation("androidx.viewpager2:viewpager2:1.1.0-beta02")
     //Gson
-    implementation ("com.google.code.gson:gson:2.9.0")
+    implementation("com.google.code.gson:gson:2.9.0")
+    //Coroutine
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.1")
+    //ImagePicker
+    implementation("com.github.dhaval2404:imagepicker:2.1")
 }

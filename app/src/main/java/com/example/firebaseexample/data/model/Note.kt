@@ -13,6 +13,7 @@ data class Note(
     val title: String? = null,
     val description: String? = null,
     val tags: MutableList<String> = arrayListOf(),
+    val images: List<String> = arrayListOf(),
     @ServerTimestamp
     val date: Date = Date(),
 ) : Parcelable

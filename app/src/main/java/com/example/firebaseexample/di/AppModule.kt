@@ -6,9 +6,12 @@ import com.example.firebaseexample.data.repository.AuthRepository
 import com.example.firebaseexample.data.repository.AuthRepositoryImpl
 import com.example.firebaseexample.data.repository.NoteRepository
 import com.example.firebaseexample.data.repository.NoteRepositoryImpl
+import com.example.firebaseexample.util.FirebaseStorageConstants
 import com.example.firebaseexample.util.SharedPrefConstants.LOCAL_SHARED_PREF
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -34,6 +37,12 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideFirebaseStorageInstance(): StorageReference {
+        return FirebaseStorage.getInstance().getReference(FirebaseStorageConstants.ROOT_DIRECTORY)
+    }
+
+    @Provides
+    @Singleton
     fun provideSharedPref(@ApplicationContext context: Context): SharedPreferences {
         return context.getSharedPreferences(LOCAL_SHARED_PREF, Context.MODE_PRIVATE)
     }
@@ -47,9 +56,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideNoteRepository(
-        database: FirebaseFirestore
+        database: FirebaseFirestore,
+        storageReference: StorageReference
     ): NoteRepository {
-        return NoteRepositoryImpl(database)
+        return NoteRepositoryImpl(database, storageReference)
     }
 
     @Provides

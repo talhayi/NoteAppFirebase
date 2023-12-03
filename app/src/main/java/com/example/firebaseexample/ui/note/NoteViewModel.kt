@@ -1,13 +1,16 @@
 package com.example.firebaseexample.ui.note
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.firebaseexample.data.model.Note
 import com.example.firebaseexample.data.model.User
 import com.example.firebaseexample.data.repository.NoteRepository
 import com.example.firebaseexample.util.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -56,6 +59,13 @@ class NoteViewModel @Inject constructor(
         _deleteNote.value = UIState.Loading
         noteRepository.deleteNote(note) {
             _deleteNote.value = it
+        }
+    }
+
+    fun onUploadSingleFile(fileUris: Uri, onResult: (UIState<Uri>) -> Unit){
+        onResult.invoke(UIState.Loading)
+        viewModelScope.launch {
+            noteRepository.uploadSingleFile(fileUris,onResult)
         }
     }
 }
