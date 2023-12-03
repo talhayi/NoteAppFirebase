@@ -1,5 +1,6 @@
 package com.example.firebaseexample.ui.note
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.net.Uri
 import android.os.Build
@@ -23,7 +24,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -140,8 +140,14 @@ class NoteDetailFragment : Fragment() {
     }
 
     private fun updateUI() {
+        @SuppressLint("SimpleDateFormat")
         val simpleDateFormat = SimpleDateFormat("dd MMM yyyy . hh:mm a")
-        objectNote = arguments?.getParcelable("note")
+        objectNote = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            arguments?.getParcelable("note", Note::class.java)
+        }else{
+            @Suppress("DEPRECATION")
+            arguments?.getParcelable("note")
+        }
         //binding.tags.layoutParams.height = 40.dpToPx
         objectNote?.let { note ->
             binding.title.setText(note.title)
