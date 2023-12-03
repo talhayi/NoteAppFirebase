@@ -90,7 +90,7 @@ class LoginFragment : Fragment() {
             isValid = false
             toast(getString(R.string.enter_password))
         }else{
-            if (binding.passEt.text.toString().length < 8){
+            if (binding.passEt.text.toString().length < 6){
                 isValid = false
                 toast(getString(R.string.invalid_password))
             }
