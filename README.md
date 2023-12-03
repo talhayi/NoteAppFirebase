@@ -25,8 +25,8 @@ Additionally, Firebase Storage is employed to store images associated with the n
 
 ## Images in NoteAppFirebase 
 
-<img src = "https://github.com/talhayi/NoteAppFirebase/assets/56438103/6f946247-eaad-4444-a9ed-d8e78125192a.jpeg" width="275" height="550">  
-<img src = "https://github.com/talhayi/NoteAppFirebase/assets/56438103/966c68f9-748e-487e-9d6c-63a37187ff68.jpeg" width="275" height="550">  
-<img src = "https://github.com/talhayi/NoteAppFirebase/assets/56438103/8769e8c4-d216-41d5-9e3d-2bf12fd433c2.jpeg" width="275" height="550">  
-<img src = "https://github.com/talhayi/NoteAppFirebase/assets/56438103/37a2d5e8-dff6-4415-b92a-6ba0295af2d1.jpeg" width="275" height="550">  
-<img src = "https://github.com/talhayi/NoteAppFirebase/assets/56438103/751565e4-dd13-45df-8cb5-07dafb9f473c.jpeg" width="275" height="550">  
+<img src = "https://github.com/talhayi/NoteAppFirebase/assets/56438103/6f946247-eaad-4444-a9ed-d8e78125192a.jpeg" width="250" height="500">  
+<img src = "https://github.com/talhayi/NoteAppFirebase/assets/56438103/966c68f9-748e-487e-9d6c-63a37187ff68.jpeg" width="250" height="500">  
+<img src = "https://github.com/talhayi/NoteAppFirebase/assets/56438103/8769e8c4-d216-41d5-9e3d-2bf12fd433c2.jpeg" width="250" height="500">  
+<img src = "https://github.com/talhayi/NoteAppFirebase/assets/56438103/37a2d5e8-dff6-4415-b92a-6ba0295af2d1.jpeg" width="250" height="500">  
+<img src = "https://github.com/talhayi/NoteAppFirebase/assets/56438103/751565e4-dd13-45df-8cb5-07dafb9f473c.jpeg" width="250" height="500">  
