@@ -16,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
-    val TAG: String = "RegisterFragment"
     private lateinit var binding: FragmentRegisterBinding
     private val viewModel: AuthViewModel by viewModels()
 
@@ -57,7 +56,12 @@ class RegisterFragment : Fragment() {
                 is UIState.Success -> {
                     binding.registerBtn.text = getString(R.string.register)
                     binding.registerProgress.hide()
-                    toast(state.data)
+                    if (state.data == getString(R.string.registration_session_fail)){
+                        toast(getString(R.string.registration_session_failed))
+                    }else{
+                        toast(getString(R.string.registration_success))
+                    }
+
                     findNavController().navigate(R.id.action_registerFragment_to_noteListFragment)
                 }
             }
@@ -105,7 +109,7 @@ class RegisterFragment : Fragment() {
             isValid = false
             toast(getString(R.string.enter_password))
         }else{
-            if (binding.passEt.text.toString().length < 8){
+            if (binding.passEt.text.toString().length < 6){
                 isValid = false
                 toast(getString(R.string.invalid_password))
             }

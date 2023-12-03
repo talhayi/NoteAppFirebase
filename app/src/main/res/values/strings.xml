@@ -26,7 +26,7 @@
     <string name="tags">Tags</string>
     <string name="description">Description</string>
     <string name="registration">Registration</string>
-    <string name="note_taking_app_where_you_save_words">Note taking app where you save words</string>
+    <string name="capture_your_thoughts_instantly">Capture Your Thoughts Instantly"</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="job_title">Job Title</string>
@@ -39,12 +39,32 @@
     <string name="enter_email">Enter email address</string>
     <string name="invalid_email">Invalid email entered</string>
     <string name="enter_password">Enter password</string>
-    <string name="invalid_password">Your password must be at least 8 characters</string>
+    <string name="invalid_password">Your password must be at least 6 characters</string>
     <string name="login">Login</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="haven_t_registered_yet">Haven’t registered yet?</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="send">Send</string>
     <string name="images">Images</string>
+    <string name="success_note_created">Note has been created successfully</string>
+    <string name="failure_note_create">Failed to create note</string>
+    <string name="success_note_updated">Note has been updated successfully</string>
+    <string name="failure_note_update">Failed to update note</string>
+    <string name="success_note_deleted">Note successfully deleted</string>
+    <string name="failure_note_delete">Failed to delete note</string>
+    <string name="registration_success">User register successfully!</string>
+    <string name="registration_failed_password">Authentication failed, Password should be at least 6 characters</string>
+    <string name="registration_failed_email">Authentication failed, Invalid email entered</string>
+    <string name="registration_failed_user_collision">Authentication failed, Email already registered.</string>
+    <string name="registration_session_failed">User register successfully but session failed to store</string>
+    <string name="registration_session_fail">registration_session_fail</string>
+    <string name="update_success">User has been updated successfully</string>
+    <string name="login_successful">Login successfully!</string>
+    <string name="login_success">login_success</string>
+    <string name="login_failed">Authentication failed, Check email and password</string>
+    <string name="forgot_password_successful">Email has been sent</string>
+    <string name="forgot_password_success">forgot_password_success</string>
+    <string name="forgot_password_failed">Authentication failed, Check email</string>
+    <string name="logout_success">Logout successful</string>
+    <string name="session_failed">Failed to store local session</string>
+
 </resources>

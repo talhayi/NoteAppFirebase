@@ -15,14 +15,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ForgotPasswordFragment : Fragment() {
 
-    val TAG: String = "ForgotPasswordFragment"
     private lateinit var binding: FragmentForgotPasswordBinding
     private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentForgotPasswordBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -41,18 +40,22 @@ class ForgotPasswordFragment : Fragment() {
         viewModel.forgotPassword.observe(viewLifecycleOwner) { state ->
             when(state){
                 is UIState.Loading -> {
-                    binding.forgotPassBtn.setText("")
+                    binding.forgotPassBtn.text = getString(R.string.empty)
                     binding.forgotPassProgress.show()
                 }
                 is UIState.Failure -> {
-                    binding.forgotPassBtn.setText("Send")
+                    binding.forgotPassBtn.text = getString(R.string.send)
                     binding.forgotPassProgress.hide()
                     toast(state.error)
                 }
                 is UIState.Success -> {
-                    binding.forgotPassBtn.setText("Send")
+                    binding.forgotPassBtn.text = getString(R.string.send)
                     binding.forgotPassProgress.hide()
-                    toast(state.data)
+                    if (state.data == getString(R.string.forgot_password_success)){
+                        toast(getString(R.string.forgot_password_successful))
+                    }else{
+                        toast(getString(R.string.forgot_password_failed))
+                    }
                 }
             }
         }

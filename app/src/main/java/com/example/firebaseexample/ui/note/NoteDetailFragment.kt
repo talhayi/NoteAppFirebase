@@ -2,6 +2,7 @@ package com.example.firebaseexample.ui.note
 
 import android.app.Activity
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -22,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,7 +44,7 @@ class NoteDetailFragment : Fragment() {
     private var imageUris: MutableList<Uri> = arrayListOf()
     private val adapter by lazy {
         ImageListAdapter(
-            onCancelClicked = { pos, item -> onRemoveImage(pos,item)}
+            onCancelClicked = { pos, item -> onRemoveImage(pos)}
         )
     }
 
@@ -89,12 +91,12 @@ class NoteDetailFragment : Fragment() {
                 }
                 is UIState.Failure -> {
                     binding.progressBar.hide()
-                    toast(state.error)
+                    toast(getString(R.string.failure_note_create))
                 }
                 is UIState.Success -> {
                     binding.progressBar.hide()
-                    toast(state.data.second)
-                    objectNote = state.data.first
+                    toast(getString(R.string.success_note_created))
+                    objectNote = state.data
                     isMakeEnableUI(false)
                     binding.edit.show()
                 }
@@ -107,11 +109,11 @@ class NoteDetailFragment : Fragment() {
                 }
                 is UIState.Failure -> {
                     binding.progressBar.hide()
-                    toast(state.error)
+                    toast(getString(R.string.failure_note_update))
                 }
                 is UIState.Success -> {
                     binding.progressBar.hide()
-                    toast(state.data)
+                    toast(getString(R.string.success_note_updated))
                     binding.done.hide()
                     binding.edit.show()
                     isMakeEnableUI(false)
@@ -126,11 +128,11 @@ class NoteDetailFragment : Fragment() {
                 }
                 is UIState.Failure -> {
                     binding.progressBar.hide()
-                    toast(state.error)
+                    toast(getString(R.string.failure_note_delete))
                 }
                 is UIState.Success -> {
                     binding.progressBar.hide()
-                    toast(state.data)
+                    toast(getString(R.string.success_note_deleted))
                     findNavController().navigateUp()
                 }
             }
@@ -210,7 +212,7 @@ class NoteDetailFragment : Fragment() {
             binding.edit.hide()
         }
     }
-    private fun onRemoveImage(pos: Int, item: Uri) {
+    private fun onRemoveImage(pos: Int) {
         adapter.removeItem(pos)
         if (objectNote != null){
             binding.edit.performClick()
@@ -221,7 +223,7 @@ class NoteDetailFragment : Fragment() {
         val button = dialog.findViewById<MaterialButton>(R.id.tag_dialog_add)
         val editText = dialog.findViewById<EditText>(R.id.tag_dialog_et)
         button.setOnClickListener {
-            if (editText.text.toString().isNullOrEmpty()) {
+            if (editText.text.toString().isEmpty()) {
                 toast(getString(R.string.error_tag_text))
             } else {
                 val text = editText.text.toString()
@@ -274,11 +276,11 @@ class NoteDetailFragment : Fragment() {
 
     private fun validation(): Boolean {
         var isValid = true
-        if (binding.title.text.toString().isNullOrEmpty()) {
+        if (binding.title.text.toString().isEmpty()) {
             isValid = false
             toast(getString(R.string.error_title))
         }
-        if (binding.description.text.toString().isNullOrEmpty()) {
+        if (binding.description.text.toString().isEmpty()) {
             isValid = false
             toast(getString(R.string.error_description))
         }

@@ -46,14 +46,14 @@ class NoteRepositoryImpl(
             }
     }
 
-    override fun addNote(note: Note, result: (UIState<Pair<Note,String>>) -> Unit) {
+    override fun addNote(note: Note, result: (UIState<Note>) -> Unit) {
         val document = database.collection(FireStoreTables.NOTE).document()
         note.id = document.id
         document
             .set(note)
             .addOnSuccessListener {
                 result.invoke(
-                    UIState.Success(Pair(note,"Note has been created successfully"))
+                    UIState.Success(note)
                 )
             }
             .addOnFailureListener {
@@ -65,14 +65,14 @@ class NoteRepositoryImpl(
             }
     }
 
-    override fun updateNote(note: Note, result: (UIState<String>) -> Unit) {
+    override fun updateNote(note: Note, result: (UIState<Note>) -> Unit) {
         val document: DocumentReference =
             database.collection(FireStoreTables.NOTE).document(note.id!!)
         document
             .set(note)
             .addOnSuccessListener {
                 result.invoke(
-                    UIState.Success("Note has been updated successfully")
+                    UIState.Success(note)
                 )
             }
             .addOnFailureListener {
@@ -84,16 +84,16 @@ class NoteRepositoryImpl(
             }
     }
 
-    override fun deleteNote(note: Note, result: (UIState<String>) -> Unit) {
+    override fun deleteNote(note: Note, result: (UIState<Note>) -> Unit) {
         val document = database.collection(FireStoreTables.NOTE).document(note.id!!)
         document
             .delete()
             .addOnSuccessListener {
                 result.invoke(
-                    UIState.Success("Note successfully deleted")
+                    UIState.Success(note)
                 )
             }
-            .addOnFailureListener {e->
+            .addOnFailureListener { e ->
                 result.invoke(
                     UIState.Failure(
                         e.localizedMessage

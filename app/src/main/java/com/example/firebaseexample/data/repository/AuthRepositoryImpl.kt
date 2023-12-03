@@ -6,9 +6,6 @@ import com.example.firebaseexample.util.FireStoreCollection
 import com.example.firebaseexample.util.SharedPrefConstants
 import com.example.firebaseexample.util.UIState
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 
@@ -21,7 +18,8 @@ class AuthRepositoryImpl(
     override fun registerUser(
         email: String,
         password: String,
-        user: User, result: (UIState<String>) -> Unit
+        user: User,
+        result: (UIState<String>) -> Unit
     ) {
         auth.createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener {
@@ -30,9 +28,9 @@ class AuthRepositoryImpl(
                     updateUserInfo(user) { state ->
                         when(state){
                             is UIState.Success -> {
-                                storeSession(id = it.result.user?.uid ?: "") {
-                                    if (it == null){
-                                        result.invoke(UIState.Failure("User register successfully but session failed to store"))
+                                storeSession(id = it.result.user?.uid ?: "") {user->
+                                    if (user == null){
+                                        result.invoke(UIState.Failure("registration_session_fail"))
                                     }else{
                                         result.invoke(
                                             UIState.Success("User register successfully!")
@@ -45,18 +43,6 @@ class AuthRepositoryImpl(
                             }
                             else -> {/*nothing*/}
                         }
-                    }
-                }else{
-                    try {
-                        throw it.exception ?: java.lang.Exception("Invalid authentication")
-                    } catch (e: FirebaseAuthWeakPasswordException) {
-                        result.invoke(UIState.Failure("Authentication failed, Password should be at least 6 characters"))
-                    } catch (e: FirebaseAuthInvalidCredentialsException) {
-                        result.invoke(UIState.Failure("Authentication failed, Invalid email entered"))
-                    } catch (e: FirebaseAuthUserCollisionException) {
-                        result.invoke(UIState.Failure("Authentication failed, Email already registered."))
-                    } catch (e: Exception) {
-                        result.invoke(UIState.Failure(e.message))
                     }
                 }
             }
@@ -98,7 +84,7 @@ class AuthRepositoryImpl(
                         if (user == null){
                             result.invoke(UIState.Failure("Failed to store local session"))
                         }else{
-                            result.invoke(UIState.Success("Login successfully!"))
+                            result.invoke(UIState.Success("login_success"))
                         }
                     }
                 }
@@ -111,7 +97,7 @@ class AuthRepositoryImpl(
         auth.sendPasswordResetEmail(email)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    result.invoke(UIState.Success("Email has been sent"))
+                    result.invoke(UIState.Success("forgot_password_success"))
 
                 } else {
                     result.invoke(UIState.Failure(task.exception?.message))

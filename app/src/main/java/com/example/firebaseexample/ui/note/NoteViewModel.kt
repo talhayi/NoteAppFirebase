@@ -22,16 +22,16 @@ class NoteViewModel @Inject constructor(
     val notes: LiveData<UIState<List<Note>>>
         get() = _notes
 
-    private val _addNote = MutableLiveData<UIState<Pair<Note,String>>>()
-    val addNote: LiveData<UIState<Pair<Note,String>>>
+    private val _addNote = MutableLiveData<UIState<Note>>()
+    val addNote: LiveData<UIState<Note>>
         get() = _addNote
 
-    private val _updateNote = MutableLiveData<UIState<String>>()
-    val updateNote: LiveData<UIState<String>>
+    private val _updateNote = MutableLiveData<UIState<Note>>()
+    val updateNote: LiveData<UIState<Note>>
         get() = _updateNote
 
-    private val _deleteNote = MutableLiveData<UIState<String>>()
-    val deleteNote: LiveData<UIState<String>>
+    private val _deleteNote = MutableLiveData<UIState<Note>>()
+    val deleteNote: LiveData<UIState<Note>>
         get() = _deleteNote
     fun getNotes(user: User?) {
         _notes.value = UIState.Loading
@@ -62,12 +62,12 @@ class NoteViewModel @Inject constructor(
         }
     }
 
-    fun onUploadSingleFile(fileUris: Uri, onResult: (UIState<Uri>) -> Unit){
+    /*fun onUploadSingleFile(fileUris: Uri, onResult: (UIState<Uri>) -> Unit){
         onResult.invoke(UIState.Loading)
         viewModelScope.launch {
             noteRepository.uploadSingleFile(fileUris,onResult)
         }
-    }
+    }*/
 
     fun onUploadMultipleFile(fileUris: List<Uri>, onResult: (UIState<List<Uri>>) -> Unit){
         onResult.invoke(UIState.Loading)

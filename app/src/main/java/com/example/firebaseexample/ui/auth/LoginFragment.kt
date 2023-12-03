@@ -15,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
 
-    val TAG: String = "LoginFragment"
     private lateinit var binding: FragmentLoginBinding
     private val viewModel: AuthViewModel by viewModels()
 
@@ -63,7 +62,12 @@ class LoginFragment : Fragment() {
                 is UIState.Success -> {
                     binding.loginBtn.text = getString(R.string.login)
                     binding.loginProgress.hide()
-                    toast(state.data)
+                    if (state.data == getString(R.string.login_success)){
+                        toast(getString(R.string.login_successful))
+                    }else{
+                        toast(getString(R.string.login_failed))
+                    }
+
                     findNavController().navigate(R.id.action_loginFragment_to_noteListFragment)
                 }
             }
