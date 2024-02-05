@@ -1,4 +1,4 @@
-# NoteAppFirebase
+# NoteApp
 This application enables users to manage notes by creating, updating, and deleting them. 
 Firebase Authentication is utilized for user authentication, while Firestore is used for storing note details. 
 Additionally, Firebase Storage is employed to store images associated with the notes.
